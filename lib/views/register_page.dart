@@ -1,9 +1,9 @@
 import 'dart:convert';
-
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:getx_testing/const.dart';
 import 'package:getx_testing/models/user.dart';
-import 'package:http/http.dart' as http;
+import 'package:getx_testing/service.dart';
 
 class RegisterPage extends StatelessWidget {
   @override
@@ -29,6 +29,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
   TextEditingController genderController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   Const env = new Const();
+  Service service = new Service();
   String? genderCode;
 
   @override
@@ -117,11 +118,6 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final genderDisplay = genderController.text;
-                    
-                    // ignore: non_constant_identifier_names
-                    // final phr_endpoint_get ="https://us-central1-phr-api.cloudfunctions.net/patient/$id";
-                    // ignore: non_constant_identifier_names
-                    final phr_endpoint_post = Const;
                     if (genderDisplay == "Male") {
                       genderCode = "male";
                     } else if (genderDisplay == "Female") {
@@ -144,28 +140,14 @@ class _MyCustomFormState extends State<MyCustomForm> {
                       telecom: Telecom(value: phoneController.text),
                     );
 
-                    // print(userModelToJson([uModel])
-                    //     .substring(1, userModelToJson([uModel]).length - 1));
-
-                    
-                    // var response = await http.post(url, body: '${userModelToJson([uModel]).substring(1,userModelToJson([uModel]).length-1)}');
-                    // var response = await http.get(url);
-                    
-
-                    var url = Uri.parse(env.phrEndpointPost);
-                    var response = await http.post(url, headers: {"Content-Type": "application/json"}, body: jsonEncode(uModel.toJson()));
-                    print(response.toString());
+                    var url = Uri.parse(env.phrPatientPost);
+                    var response = await service.postData(url,jsonEncode(uModel.toJson()));
                     if (response.statusCode == 201) {
                       var result = jsonDecode(response.body);
-                      print("Success $result");
-
-                      // var json = jsonDecode(response.body
-                      //         .substring(1, response.body.length - 1));
-                      // var nik = json['extension']['nik']['system'];
-                      // print("nik system -> $nik");
-                      // String message = response.body;
+                      Get.defaultDialog(title:"Success", content: Text(result['message'].toString()));
                     } else {
-                      print("error ${response.statusCode}");
+                      var result = jsonDecode(response.body);
+                      Get.defaultDialog(title:"Failed", content: Text(result['error'][0]['msg'].toString()));
                     }
                   }
                 },
