@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:getx_testing/const.dart';
 import 'package:getx_testing/models/user.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,7 +28,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
   TextEditingController dateController = TextEditingController();
   TextEditingController genderController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-
+  Const env = new Const();
   String? genderCode;
 
   @override
@@ -116,17 +117,11 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final genderDisplay = genderController.text;
-                    const genderSystem =
-                        "http://hl7.org/fhir/administrative-gender";
-                    const nikSystem =
-                        "https://us-central1-phr-api.cloudfunctions.net/nik";
-                    const bpjsSystem =
-                        "https://us-central1-phr-api.cloudfunctions.net/bpjs";
-                    String id = "43E9FZTfsWfXadoDqujj";
+                    
                     // ignore: non_constant_identifier_names
                     // final phr_endpoint_get ="https://us-central1-phr-api.cloudfunctions.net/patient/$id";
                     // ignore: non_constant_identifier_names
-                    final phr_endpoint_post ="https://us-central1-phr-api.cloudfunctions.net/patient";
+                    final phr_endpoint_post = Const;
                     if (genderDisplay == "Male") {
                       genderCode = "male";
                     } else if (genderDisplay == "Female") {
@@ -138,12 +133,12 @@ class _MyCustomFormState extends State<MyCustomForm> {
                       address: Address(text: addressController.text),
                       birthdate: DateTime(2000, 10, 20),
                       extension: Extension(
-                          bpjs: Bpjs(system: bpjsSystem, valueString: "123"),
-                          nik: Nik(system: nikSystem, valueString: "123")),
+                          bpjs: Bpjs(system: env.bpjsSystem, valueString: "123"),
+                          nik: Nik(system: env.nikSystem, valueString: "123")),
                       gender: Gender(
                           code: genderCode,
                           display: genderDisplay,
-                          system: genderSystem),
+                          system: env.genderSystem),
                       name: Address(text: nameController.text),
                       resourceType: "Patient",
                       telecom: Telecom(value: phoneController.text),
@@ -155,7 +150,9 @@ class _MyCustomFormState extends State<MyCustomForm> {
                     
                     // var response = await http.post(url, body: '${userModelToJson([uModel]).substring(1,userModelToJson([uModel]).length-1)}');
                     // var response = await http.get(url);
-                    var url = Uri.parse(phr_endpoint_post);
+                    
+
+                    var url = Uri.parse(env.phrEndpointPost);
                     var response = await http.post(url, headers: {"Content-Type": "application/json"}, body: jsonEncode(uModel.toJson()));
                     print(response.toString());
                     if (response.statusCode == 201) {
