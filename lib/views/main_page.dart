@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_testing/views/register_page.dart';
+import 'package:getx_testing/views/see_patient_page.dart';
 import 'package:getx_testing/views/shopping_page.dart';
 
 class MainPage extends StatelessWidget {
@@ -32,7 +33,7 @@ class MainPage extends StatelessWidget {
                 margin: EdgeInsets.all(20),
                 child: ElevatedButton(
                     onPressed: () {
-                      Get.to(ShoppingPage());
+                      Get.to(SeePatientPage());
                       // Get.snackbar("READ", "Lets see some data!");
                       // Get.defaultDialog(title:"Read Data", content: Text("Lets see some data!"));
                       // Get.bottomSheet(
