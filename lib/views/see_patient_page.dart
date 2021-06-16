@@ -37,7 +37,7 @@ class SeePatientPage extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '${controller.patient[index].name}',
+                                              '${controller.patient[index].name!.text}',
                                               style: TextStyle(fontSize: 24),
                                             ),
                                             Text(
@@ -45,11 +45,11 @@ class SeePatientPage extends StatelessWidget {
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].gender}',
+                                              '${controller.patient[index].gender!.display}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].telecom}',
+                                              '${controller.patient[index].telecom!.value}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
@@ -57,11 +57,11 @@ class SeePatientPage extends StatelessWidget {
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].extension!.bpjs}',
+                                              '${controller.patient[index].extension!.bpjs!.valueString}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].extension!.nik}',
+                                              '${controller.patient[index].extension!.nik!.valueString}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                           ],
@@ -75,7 +75,6 @@ class SeePatientPage extends StatelessWidget {
                   );
               }),
             ),
-
           ],
         ),
       ),

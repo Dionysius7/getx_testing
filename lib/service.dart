@@ -9,4 +9,8 @@ class Service {
     var finalUrl = Uri.parse(url + phrId);
     return http.get(finalUrl);
   }
+  Future getAllPatientData(url){
+    var finalUrl = Uri.parse(url);
+    return http.get(finalUrl);
+  }
 }

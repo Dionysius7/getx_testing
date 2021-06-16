@@ -19,24 +19,13 @@ class PatientDataController extends GetxController {
 
   void fetchPatientData() async {
     var response = await service.getPatientData(constant.phrPatientGet,phrId);
-    var res_body = userModelFromJson(response.body);
-    print(res_body);
-    print(res_body.runtimeType);
-    var x = (userModelFromJson(res_body.toString()));
-    print(x);
-    print(x.runtimeType);
-    print("z");
-    print(UserModel.fromJson(jsonDecode(response.body)));
-     print("y");
-    if(response.statusCode == 200) {
-      var patientData = UserModel.fromJson(jsonDecode(response.body));
+     if(response.statusCode == 200) {
+      var patientData = userModelFromJson(response.body);
       print(patientData);
+      patient.value = patientData;
     }
     else{
       print(response.statusCode);
     }
-
-
-    patient.value = response;
   }
 }

@@ -7,7 +7,7 @@ import 'dart:convert';
 List<UserModel> userModelFromJson(String str) {
   return List<UserModel>.from(json.decode(str).map((x) {
     return UserModel.fromJson(x as Map<String,dynamic>);
-  }) as List);
+  }));
 }
 
 String userModelToJson(List<UserModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -105,8 +105,8 @@ class Bpjs {
     String? system;
 
     factory Bpjs.fromJson(Map<String, dynamic> json) => Bpjs(
-        valueString: json["valueStringbpjs"].toString(),
-        system: json["systembpjs"].toString(),
+        valueString: json["valueString"].toString(),
+        system: json["system"].toString(),
     );
 
     Map<String, dynamic> toJson() => {
