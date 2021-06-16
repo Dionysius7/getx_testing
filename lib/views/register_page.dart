@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:getx_testing/const.dart';
+import 'package:getx_testing/controllers/register_patient_controller.dart';
 import 'package:getx_testing/models/user.dart';
 import 'package:getx_testing/service.dart';
 
 class RegisterPage extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +22,7 @@ class MyCustomForm extends StatefulWidget {
 }
 
 class _MyCustomFormState extends State<MyCustomForm> {
+  final registerPatientController = Get.put(RegisterPatientController());
   final _formKey = GlobalKey<FormState>();
 
   // Create Controller to get Data from FORM
@@ -139,16 +142,8 @@ class _MyCustomFormState extends State<MyCustomForm> {
                       resourceType: "Patient",
                       telecom: Telecom(value: phoneController.text),
                     );
-
-                    var url = Uri.parse(env.phrPatientPost);
-                    var response = await service.postData(url,jsonEncode(uModel.toJson()));
-                    if (response.statusCode == 201) {
-                      var result = jsonDecode(response.body);
-                      Get.defaultDialog(title:"Success", content: Text(result['message'].toString()));
-                    } else {
-                      var result = jsonDecode(response.body);
-                      Get.defaultDialog(title:"Failed", content: Text(result['error'][0]['msg'].toString()));
-                    }
+                   var resultMessage = await registerPatientController.postPatientData(uModel);
+                   Get.defaultDialog(title:"Response", content: Text(resultMessage.toString()));
                   }
                 },
                 child: const Text("Submit"),

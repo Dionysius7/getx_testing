@@ -27,7 +27,7 @@ class MainPage extends StatelessWidget {
                       primary: Colors.lightBlue,
                       padding: EdgeInsets.all(15),
                     ),
-                    child: Text("Register Here")),
+                    child: Text("Register Patient Data")),
               ),
               Container(
                 margin: EdgeInsets.all(20),
@@ -52,7 +52,7 @@ class MainPage extends StatelessWidget {
                       primary: Colors.lightBlue,
                       padding: EdgeInsets.all(15),
                     ),
-                    child: Text("See Data Here")),
+                    child: Text("See My Patient Data")),
               ),
             ],
           ),
