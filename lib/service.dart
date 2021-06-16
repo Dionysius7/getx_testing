@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 class Service {
   final Map<String,String> contentType = {"Content-Type":"application/json"};
 
-  Future postData(url,body) {
+  Future postPatientData(url,body) {
      return http.post(url, headers: contentType, body: body);
   }
   Future getPatientData(url,phrId){
@@ -12,5 +12,13 @@ class Service {
   Future getAllPatientData(url){
     var finalUrl = Uri.parse(url);
     return http.get(finalUrl);
+  }
+  Future getAllNotifData(url,phrId){
+    var finalUrl = Uri.parse(url + phrId);
+    return http.get(finalUrl);
+  }
+  Future postNotifToPHR(url,phrId) {
+    var finalUrl = Uri.parse(url + phrId);
+    return http.post(finalUrl, headers: contentType);
   }
 }

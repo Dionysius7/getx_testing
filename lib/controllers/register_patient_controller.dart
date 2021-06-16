@@ -12,7 +12,7 @@ class RegisterPatientController extends GetxController {
   Future<String> postPatientData(data) async {
     var url = Uri.parse(constant.phrPatientPost);
     var uModel = data;
-    var response = await service.postData(url,jsonEncode(uModel.toJson()));
+    var response = await service.postPatientData(url,jsonEncode(uModel.toJson()));
     var result = jsonDecode(response.body);
     
     if (response.statusCode == 201) {

@@ -49,7 +49,6 @@ class UserModel {
 
     Map<String, dynamic> toJson() => {
         "telecom": telecom?.toJson(),
-        // ignore: cast_nullable_to_non_nullable
         "extension": extension?.toJson(),
         "gender": gender?.toJson(),
         "birthdate": "${birthdate!.year.toString().padLeft(4, '0')}-${birthdate!.month.toString().padLeft(2, '0')}-${birthdate!.day.toString().padLeft(2, '0')}",
