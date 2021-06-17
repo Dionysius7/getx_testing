@@ -45,20 +45,6 @@ class NotificationMenuPage extends StatelessWidget {
                     ),
                     child: Text("Create Condition Notification to PHR")),
               ),
-               Container(
-                margin: EdgeInsets.all(20),
-                child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(SeeNotificationPHR());
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 10,
-                      textStyle: TextStyle(fontSize: 25),
-                      primary: Colors.redAccent,
-                      padding: EdgeInsets.all(15),
-                    ),
-                    child: Text("Read Notification to PHR")),
-              ),
             ],
           ),
         ],

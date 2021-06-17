@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_testing/controllers/patient_data_controller.dart';
+import 'package:getx_testing/controllers/get_notif_data_phr_controller.dart';
  
-class SeeNotificationPHR extends StatelessWidget {
-  final patientDataController = Get.put(PatientDataController());
+class SeeNotificationPHRPage extends StatelessWidget {
+  final getNotifDataController = Get.put(GetNotifDataController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("See My Patient Data")),
+      appBar: AppBar(title: Text("See My Phr Notification Data")),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child:GetX<PatientDataController>(builder: (controller) {
+              child:GetX<GetNotifDataController>(builder: (controller) {
                 return ListView.builder(
-                  itemCount: controller.patient.length,
+                  itemCount: controller.notification.length,
                   itemBuilder: (context, index) {
+                    var cardColor = Colors.white;
+                    (controller.notification[index].type == "patient") ? cardColor = Colors.green : cardColor = Colors.blueAccent;
                     return Card(
                           elevation: 20,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          color: cardColor,
                           margin: const EdgeInsets.all(12),
                           child: SizedBox(
                             height:MediaQuery.of(context).size.height/4.5,
@@ -37,31 +40,31 @@ class SeeNotificationPHR extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '${controller.patient[index].name!.text}',
+                                              '${controller.notification[index].hospitalName}',
                                               style: TextStyle(fontSize: 24),
                                             ),
                                             Text(
-                                              '${controller.patient[index].phrId}',
+                                              '${controller.notification[index].hospitalSystem}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].gender!.display}',
+                                              '${controller.notification[index].notificationId}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].telecom!.value}',
+                                              '${controller.notification[index].receiverId}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].birthdate}',
+                                              '${controller.notification[index].status}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].extension!.bpjs!.valueString}',
+                                              '${controller.notification[index].timestamp}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].extension!.nik!.valueString}',
+                                              '${controller.notification[index].type}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                           ],

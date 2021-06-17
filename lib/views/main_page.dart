@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_testing/views/notification_menu_page.dart';
 import 'package:getx_testing/views/register_page.dart';
+import 'package:getx_testing/views/see_notif_phr_page.dart';
 import 'package:getx_testing/views/see_patient_page.dart';
 import 'package:getx_testing/views/shopping_page.dart';
 
@@ -29,6 +30,20 @@ class MainPage extends StatelessWidget {
                       padding: EdgeInsets.all(15),
                     ),
                     child: Text("Register PHR Patient Data")),
+              ),
+              Container(
+                margin: EdgeInsets.all(20),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(SeeNotificationPHRPage());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      textStyle: TextStyle(fontSize: 25),
+                      primary: Colors.lightBlue,
+                      padding: EdgeInsets.all(15),
+                    ),
+                    child: Text("See My PHR Notification")),
               ),
              
               Container(
@@ -68,7 +83,7 @@ class MainPage extends StatelessWidget {
                       primary: Colors.redAccent,
                       padding: EdgeInsets.all(15),
                     ),
-                    child: Text("Notification Menu")),
+                    child: Text("Hospital Notification Menu")),
               ),
             ],
           ),
