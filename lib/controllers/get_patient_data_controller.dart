@@ -5,11 +5,10 @@ import 'package:getx_testing/const.dart';
 import 'package:getx_testing/models/user.dart';
 import 'package:getx_testing/service.dart';
 
-class PatientDataController extends GetxController {
+class GetPatientDataController extends GetxController {
   var patient = <UserModel>[].obs;
   var service = new Service();
   var constant = new Const();
-  var phrId = "BbRlILUcjl5LxYBRf2um";
 
   @override
   void onInit() {
@@ -18,7 +17,7 @@ class PatientDataController extends GetxController {
   }
 
   void fetchPatientData() async {
-    var response = await service.getPatientData(constant.phrPatientGet,phrId);
+    var response = await service.getPatientData(constant.phrPatientGet,constant.phrId);
      if(response.statusCode == 200) {
       var patientData = userModelFromJson(response.body);
       print(patientData);

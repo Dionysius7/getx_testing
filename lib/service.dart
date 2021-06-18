@@ -21,4 +21,9 @@ class Service {
     var finalUrl = Uri.parse(url + phrId);
     return http.post(finalUrl, headers: contentType);
   }
+  Future getAllConditionData(url,phrId){
+    var finalUrl = Uri.parse(url + phrId);
+    print(finalUrl);
+    return http.get(finalUrl);
+  }
 }

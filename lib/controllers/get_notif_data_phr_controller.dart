@@ -9,7 +9,6 @@ class GetNotifDataController extends GetxController {
   var notification = <NotifModel>[].obs;
   var service = new Service();
   var constant = new Const();
-  var phrId = "BbRlILUcjl5LxYBRf2um";
 
   @override
     void onInit() {
@@ -19,7 +18,7 @@ class GetNotifDataController extends GetxController {
     }
 
   void fetchNotifData() async {
-    var response = await service.getAllNotifData(constant.phrNotifGet, phrId);
+    var response = await service.getAllNotifData(constant.phrNotifGet, constant.phrId);
      if(response.statusCode == 200) {
       var notifData = notifModelFromJson(response.body);
       print(notifData);

@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_testing/controllers/get_patient_data_controller.dart';
+import 'package:getx_testing/controllers/get_condition_data_controller.dart';
  
-class SeePatientPage extends StatelessWidget {
-  final patientDataController = Get.put(GetPatientDataController());
+class SeeConditionPage extends StatelessWidget {
+  final getConditionDataController = Get.put(GetConditionDataController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("See My Patient Data")),
+      appBar: AppBar(title: Text("See My Phr Condition Data")),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child:GetX<GetPatientDataController>(builder: (controller) {
+              child:GetX<GetConditionDataController>(builder: (controller) {
                 return ListView.builder(
-                  itemCount: controller.patient.length,
+                  itemCount: controller.condition.length,
                   itemBuilder: (context, index) {
+                    var cardColor = Colors.white;
                     return Card(
                           elevation: 20,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          color: cardColor,
                           margin: const EdgeInsets.all(12),
                           child: SizedBox(
                             height:MediaQuery.of(context).size.height/4.5,
@@ -37,31 +39,35 @@ class SeePatientPage extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '${controller.patient[index].name!.text}',
+                                              '${controller.condition[index].asserter}',
                                               style: TextStyle(fontSize: 24),
                                             ),
                                             Text(
-                                              '${controller.patient[index].phrId}',
+                                              '${controller.condition[index].category!.coding!.display}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].gender!.display}',
+                                              '${controller.condition[index].code!.coding!.display}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].telecom!.value}',
+                                              '${controller.condition[index].evidence!.details}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].birthdate}',
+                                              '${controller.condition[index].extension!.valueString}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].extension!.bpjs!.valueString}',
+                                              '${controller.condition[index].onSetDateTime}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].extension!.nik!.valueString}',
+                                              '${controller.condition[index].subject!.identifier}',
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                            Text(
+                                              '${controller.condition[index].resourceType}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                           ],

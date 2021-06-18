@@ -9,7 +9,6 @@ class NotifDataController extends GetxController {
   var notification = <NotifModel>[].obs;
   var service = new Service();
   var constant = new Const();
-  var phrId = "BbRlILUcjl5LxYBRf2um";
 
   // void fetchNotifData() async {
   //   var response = await service.getAllNotifData(constant.phrNotifGet, phrId);
