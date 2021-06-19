@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_testing/controllers/get_notif_data_phr_controller.dart';
+import 'package:getx_testing/controllers/notif_data_phr_controller.dart';
  
 class SeeNotificationPHRPage extends StatelessWidget {
-  final getNotifDataController = Get.put(GetNotifDataController());
-
+  final notifDataController = Get.put(NotifDataController());
   @override
   Widget build(BuildContext context) {
+    notifDataController.fetchNotifData();
     return Scaffold(
       appBar: AppBar(title: Text("See My Phr Notification Data")),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child:GetX<GetNotifDataController>(builder: (controller) {
+              child:GetX<NotifDataController>(builder: (controller) {
                 return ListView.builder(
                   itemCount: controller.notification.length,
                   itemBuilder: (context, index) {

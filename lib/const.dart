@@ -1,6 +1,6 @@
 class Const{
    //Static PHR_ID [Delete Later]
-   final String phrId = "BbRlILUcjl5LxYBRf2um";
+   final String phrId = "EJDDU9XIJAv6acaqRlDE";
 
    final String genderSystem = "http://hl7.org/fhir/administrative-gender";
    final String nikSystem = "https://us-central1-phr-api.cloudfunctions.net/nik";
@@ -11,6 +11,7 @@ class Const{
    final String phrPatientGet = "https://us-central1-phr-api.cloudfunctions.net/patient/";
 
    final String phrConditionGet = "https://us-central1-phr-api.cloudfunctions.net/condition/";
+   final String phrConditionPost = "https://us-central1-phr-api.cloudfunctions.net/condition/";
 
    final String phrNotifGet = "https://us-central1-phr-api.cloudfunctions.net/notification/";
    final String phrNotifPostPatient = "https://us-central1-his-api-93700.cloudfunctions.net/notification/patient/";

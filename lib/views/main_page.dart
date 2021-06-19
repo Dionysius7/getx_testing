@@ -100,6 +100,20 @@ class MainPage extends StatelessWidget {
                     ),
                     child: Text("Hospital Notification Menu")),
               ),
+               Container(
+                margin: EdgeInsets.all(20),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(NotificationMenuPage());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      textStyle: TextStyle(fontSize: 25),
+                      primary: Colors.redAccent,
+                      padding: EdgeInsets.all(15),
+                    ),
+                    child: Text("Hospital Create Condition")),
+              ),
             ],
           ),
         ],

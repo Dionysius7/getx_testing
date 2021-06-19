@@ -26,4 +26,8 @@ class Service {
     print(finalUrl);
     return http.get(finalUrl);
   }
+  Future postConditionData(url, body, phrId) {
+    var finalUrl = Uri.parse(url + phrId);
+    return http.post(finalUrl, headers: contentType, body: body);
+  }
 }

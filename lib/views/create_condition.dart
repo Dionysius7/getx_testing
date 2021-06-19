@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:getx_testing/const.dart';
+import 'package:getx_testing/controllers/condition_data_controller.dart';
 import 'package:getx_testing/controllers/patient_data_controller.dart';
 import 'package:getx_testing/models/user.dart';
 import 'package:getx_testing/service.dart';
 
-class RegisterPage extends StatelessWidget {
+class CreateConditionPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class MyCustomForm extends StatefulWidget {
 }
 
 class _MyCustomFormState extends State<MyCustomForm> {
-  final patientController = Get.put(PatientDataController());
+  final conditionDataController = Get.put(ConditionDataController());
   final _formKey = GlobalKey<FormState>();
 
   // Create Controller to get Data from FORM
@@ -142,7 +143,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
                       resourceType: "Patient",
                       telecom: Telecom(value: phoneController.text),
                     );
-                   var resultMessage = await patientController.postPatientData(uModel);
+                   var resultMessage = await conditionDataController.postConditionData(uModel);
                    Get.defaultDialog(title:"Response", content: Text(resultMessage.toString()));
                   }
                 },

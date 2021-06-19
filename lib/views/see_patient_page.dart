@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_testing/controllers/get_patient_data_controller.dart';
+import 'package:getx_testing/controllers/patient_data_controller.dart';
  
 class SeePatientPage extends StatelessWidget {
-  final patientDataController = Get.put(GetPatientDataController());
+  final patientDataController = Get.put(PatientDataController());
 
   @override
   Widget build(BuildContext context) {
+    patientDataController.fetchPatientData();
     return Scaffold(
       appBar: AppBar(title: Text("See My Patient Data")),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child:GetX<GetPatientDataController>(builder: (controller) {
+              child:GetX<PatientDataController>(builder: (controller) {
                 return ListView.builder(
                   itemCount: controller.patient.length,
                   itemBuilder: (context, index) {
@@ -54,6 +55,10 @@ class SeePatientPage extends StatelessWidget {
                                             ),
                                             Text(
                                               '${controller.patient[index].birthdate}',
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                            Text(
+                                              '${controller.patient[index].address!.text}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(

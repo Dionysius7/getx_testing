@@ -5,18 +5,22 @@ import 'package:getx_testing/const.dart';
 import 'package:getx_testing/models/condition.dart';
 import 'package:getx_testing/service.dart';
 
-class GetConditionDataController extends GetxController {
+class ConditionDataController extends GetxController {
   var condition = <ConditionModel>[].obs;
   var service = new Service();
   var constant = new Const();
 
-
-  @override
-    void onInit() {
-      // TODO: implement onInit
-      super.onInit();
-      fetchConditionData();
+  Future<String> postConditionData(body) async {
+    var response = await service.postConditionData(constant.phrConditionPost, body, constant.phrId);
+    var result = jsonDecode(response.body);
+    
+    if (response.statusCode == 201) {
+      return result['data']['message'];
+    } 
+    else {
+      return result['message'];
     }
+  }
 
   void fetchConditionData() async {
     var response = await service.getAllConditionData(constant.phrConditionGet, constant.phrId);

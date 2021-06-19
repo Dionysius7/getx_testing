@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_testing/controllers/get_condition_data_controller.dart';
+import 'package:getx_testing/controllers/condition_data_controller.dart';
  
 class SeeConditionPage extends StatelessWidget {
-  final getConditionDataController = Get.put(GetConditionDataController());
+  final conditionDataController = Get.put(ConditionDataController());
 
   @override
   Widget build(BuildContext context) {
+    conditionDataController.fetchConditionData();
     return Scaffold(
       appBar: AppBar(title: Text("See My Phr Condition Data")),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child:GetX<GetConditionDataController>(builder: (controller) {
+              child:GetX<ConditionDataController>(builder: (controller) {
                 return ListView.builder(
                   itemCount: controller.condition.length,
                   itemBuilder: (context, index) {
@@ -40,7 +41,7 @@ class SeeConditionPage extends StatelessWidget {
                                           children: [
                                             Text(
                                               '${controller.condition[index].asserter}',
-                                              style: TextStyle(fontSize: 24),
+                                              style: TextStyle(fontSize: 18),
                                             ),
                                             Text(
                                               '${controller.condition[index].category!.coding!.display}',

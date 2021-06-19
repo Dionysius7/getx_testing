@@ -10,17 +10,17 @@ class NotifDataController extends GetxController {
   var service = new Service();
   var constant = new Const();
 
-  // void fetchNotifData() async {
-  //   var response = await service.getAllNotifData(constant.phrNotifGet, phrId);
-  //    if(response.statusCode == 200) {
-  //     var notifData = notifModelFromJson(response.body);
-  //     print(notifData);
-  //     notification.value = notifData;
-  //   }
-  //   else{
-  //     print(response.statusCode);
-  //   }
-  // }
+  void fetchNotifData() async {
+    var response = await service.getAllNotifData(constant.phrNotifGet, constant.phrId);
+     if(response.statusCode == 200) {
+      var notifData = notifModelFromJson(response.body);
+      print(notifData);
+      notification.value = notifData;
+    }
+    else{
+      print(response.statusCode);
+    }
+  }
 
   Future<String> postPatientNotif(phrIds) async {
     var response = await service.postNotifToPHR(constant.phrNotifPostPatient, phrIds);
