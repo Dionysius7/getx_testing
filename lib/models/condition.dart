@@ -22,7 +22,7 @@ class ConditionModel {
 
     String? resourceType;
     Category? category;
-    Category? code;
+    Code? code;
     Subject? subject;
     DateTime? onSetDateTime;
     Evidence? evidence;
@@ -32,7 +32,7 @@ class ConditionModel {
     factory ConditionModel.fromJson(Map<String, dynamic> json) => ConditionModel(
         resourceType: json["resourceType"],
         category: Category.fromJson(json["category"]),
-        code: Category.fromJson(json["code"]),
+        code: Code.fromJson(json["code"]),
         subject: Subject.fromJson(json["subject"]),
         onSetDateTime: DateTime.parse(json["onSetDateTime"]),
         evidence: Evidence.fromJson(json["evidence"]),
@@ -60,6 +60,22 @@ class Category {
     Coding? coding;
 
     factory Category.fromJson(Map<String, dynamic> json) => Category(
+        coding: Coding.fromJson(json["coding"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "coding": coding!.toJson(),
+    };
+}
+
+class Code {
+    Code({
+        this.coding,
+    });
+
+    Coding? coding;
+
+    factory Code.fromJson(Map<String, dynamic> json) => Code(
         coding: Coding.fromJson(json["coding"]),
     );
 

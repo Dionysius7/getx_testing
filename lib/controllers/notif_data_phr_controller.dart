@@ -23,7 +23,7 @@ class NotifDataController extends GetxController {
   }
 
   Future<String> postPatientNotif(phrIds) async {
-    var response = await service.postNotifToPHR(constant.phrNotifPostPatient, phrIds);
+    var response = await service.postNotifToPHR(constant.hospitalNotifPostPatient, phrIds);
     var result = jsonDecode(response.body);
     
     if (response.statusCode == 200) {
@@ -35,7 +35,7 @@ class NotifDataController extends GetxController {
   }
 
   Future<String> postConditionNotif(phrIds) async {
-    var response = await service.postNotifToPHR(constant.phrNotifPostCondition, phrIds);
+    var response = await service.postNotifToPHR(constant.hospitalNotifPostCondition, phrIds);
     var result = jsonDecode(response.body);
     
     if (response.statusCode == 200) {

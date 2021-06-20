@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:getx_testing/const.dart';
 import 'package:getx_testing/models/condition.dart';
@@ -10,15 +9,17 @@ class ConditionDataController extends GetxController {
   var service = new Service();
   var constant = new Const();
 
-  Future<String> postConditionData(body) async {
-    var response = await service.postConditionData(constant.phrConditionPost, body, constant.phrId);
+  Future<String> postConditionData(data, phrIds) async {
+    var cModel = data;
+    var response = await service.postConditionData(constant.hospitalConditionPost, jsonEncode(cModel.toJson()), phrIds);
+
     var result = jsonDecode(response.body);
     
     if (response.statusCode == 201) {
-      return result['data']['message'];
+      return result['message'];
     } 
     else {
-      return result['message'];
+        return result['error'].toString();
     }
   }
 

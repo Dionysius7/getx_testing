@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:getx_testing/const.dart';
 import 'package:getx_testing/controllers/condition_data_controller.dart';
-import 'package:getx_testing/controllers/patient_data_controller.dart';
-import 'package:getx_testing/models/user.dart';
+import 'package:getx_testing/models/condition.dart';
 import 'package:getx_testing/service.dart';
 
 class CreateConditionPage extends StatelessWidget {
@@ -12,7 +11,7 @@ class CreateConditionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Register Page")),
+        appBar: AppBar(title: const Text("Hospital Create Conditiion")),
         body: MyCustomForm());
   }
 }
@@ -27,14 +26,15 @@ class _MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
 
   // Create Controller to get Data from FORM
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  TextEditingController asserterController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController subjectController = TextEditingController();
+  TextEditingController evidenceController = TextEditingController();
   Const env = new Const();
   Service service = new Service();
-  String? genderCode;
+  String? categoryCode;
+  String? codingCode;
 
   @override
   Widget build(BuildContext context) {
@@ -46,72 +46,72 @@ class _MyCustomFormState extends State<MyCustomForm> {
             TextFormField(
               decoration: const InputDecoration(
                 icon: Icon(Icons.person),
-                hintText: "Enter Your Name",
-                labelText: "Name",
+                hintText: "Enter Asserter Name",
+                labelText: "Asserter Name",
               ),
-              controller: nameController,
+              controller: asserterController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Name is required';
+                  return 'Asserter name is required';
                 }
                 return null;
               },
             ),
             TextFormField(
               decoration: const InputDecoration(
-                icon: Icon(Icons.phone),
-                hintText: "Enter Your Phone Number",
-                labelText: "Phone",
+                icon: Icon(Icons.category),
+                hintText: "Enter Category",
+                labelText: "Category",
               ),
-              controller: phoneController,
+              controller: categoryController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Phone is required';
+                  return 'Category is required';
+                }
+                if (value != "Encounter Diagnosis" && value != "Problem List Item") {
+                  return 'Category is Unknown';
                 }
                 return null;
               },
             ),
             TextFormField(
               decoration: const InputDecoration(
-                icon: Icon(Icons.person),
-                hintText: "Enter Your Gender (Male/Female)",
-                labelText: "Gender",
+                icon: Icon(Icons.check_box),
+                hintText: "Enter Code",
+                labelText: "Code",
               ),
-              controller: genderController,
+              controller: codeController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Gender is required';
-                }
-                if (value != "Male" && value != "Female") {
-                  return 'Gender is Unknown';
+                  return 'Code is required';
                 }
                 return null;
               },
             ),
             TextFormField(
               decoration: const InputDecoration(
-                icon: Icon(Icons.book),
-                hintText: "Enter Address",
-                labelText: "Address",
+                icon: Icon(Icons.subject),
+                hintText: "Enter Subject PHR Id",
+                labelText: "Subject",
               ),
-              controller: addressController,
+              controller: subjectController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Address is required';
+                  return 'Subject is required';
                 }
                 return null;
               },
             ),
             TextFormField(
               decoration: const InputDecoration(
-                icon: Icon(Icons.calendar_today),
-                hintText: "Enter Your DoB",
-                labelText: "Date of Birth",
+                icon: Icon(Icons.check),
+                hintText: "Enter evidence",
+                labelText: "Evidence",
               ),
-              controller: dateController,
+              controller: evidenceController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Day Of Birth is required';
+                  return 'Evidence is required';
                 }
                 return null;
               },
@@ -121,29 +121,47 @@ class _MyCustomFormState extends State<MyCustomForm> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    final genderDisplay = genderController.text;
-                    if (genderDisplay == "Male") {
-                      genderCode = "male";
-                    } else if (genderDisplay == "Female") {
-                      genderCode = "female";
-                    } else {
-                      genderCode = "unknown";
-                    }
-                    UserModel uModel = UserModel(
-                      address: Address(text: addressController.text),
-                      birthdate: DateTime(2000, 10, 20),
+                    final categoryDisplay = categoryController.text;
+                    //CATEGORY CHECKING
+                      if (categoryDisplay == "Encounter Diagnosis") {
+                        categoryCode = "encounter-diagnosis";
+                      } else if (categoryDisplay == "Problem List Item") {
+                        categoryCode = "problem-list-item";
+                      } else {
+                        categoryCode = "unknown";
+                      }
+                    //SOON DIAGNOSIS CODE CHECKING
+                    ConditionModel cModel = ConditionModel(
+                      resourceType: "Condition",
+                      category: Category(
+                        coding: Coding(
+                          code: categoryCode,
+                          system: env.categorySystem,
+                          display: categoryDisplay
+                        ) 
+                      ),
+                      code: Code(
+                        coding: Coding(
+                          code: "E11.9",
+                          system: env.codeCodingSystem,
+                          display: "Non - insulin-dependent diabetes mellitus tanpa komplikasi",
+                        ) 
+                      ),
+                      subject: Subject(
+                        reference: env.subjectReferenceSystem,
+                        identifier: subjectController.text
+                      ),
+                      onSetDateTime: DateTime(0),
+                      evidence: Evidence(
+                        details: evidenceController.text
+                      ),
+                      asserter: asserterController.text,
                       extension: Extension(
-                          bpjs: Bpjs(system: env.bpjsSystem, valueString: "123"),
-                          nik: Nik(system: env.nikSystem, valueString: "123")),
-                      gender: Gender(
-                          code: genderCode,
-                          display: genderDisplay,
-                          system: env.genderSystem),
-                      name: Address(text: nameController.text),
-                      resourceType: "Patient",
-                      telecom: Telecom(value: phoneController.text),
+                        url: env.extensionLocationSystem,
+                        valueString: env.hospitalNameExample
+                      )
                     );
-                   var resultMessage = await conditionDataController.postConditionData(uModel);
+                   var resultMessage = await conditionDataController.postConditionData(cModel, subjectController.text);
                    Get.defaultDialog(title:"Response", content: Text(resultMessage.toString()));
                   }
                 },

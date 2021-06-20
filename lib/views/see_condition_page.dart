@@ -25,7 +25,6 @@ class SeeConditionPage extends StatelessWidget {
                           color: cardColor,
                           margin: const EdgeInsets.all(12),
                           child: SizedBox(
-                            height:MediaQuery.of(context).size.height/4.5,
                             child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
@@ -48,7 +47,23 @@ class SeeConditionPage extends StatelessWidget {
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
+                                              '${controller.condition[index].category!.coding!.code}',
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                            Text(
+                                              '${controller.condition[index].category!.coding!.system}',
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                            Text(
                                               '${controller.condition[index].code!.coding!.display}',
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                            Text(
+                                              '${controller.condition[index].code!.coding!.code}',
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                            Text(
+                                              '${controller.condition[index].code!.coding!.system}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(

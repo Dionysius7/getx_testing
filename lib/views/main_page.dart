@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_testing/views/create_condition.dart';
 import 'package:getx_testing/views/notification_menu_page.dart';
 import 'package:getx_testing/views/register_page.dart';
 import 'package:getx_testing/views/see_condition_page.dart';
 import 'package:getx_testing/views/see_notif_phr_page.dart';
 import 'package:getx_testing/views/see_patient_page.dart';
-import 'package:getx_testing/views/shopping_page.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -104,7 +104,7 @@ class MainPage extends StatelessWidget {
                 margin: EdgeInsets.all(20),
                 child: ElevatedButton(
                     onPressed: () {
-                      Get.to(NotificationMenuPage());
+                      Get.to(CreateConditionPage());
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 10,
