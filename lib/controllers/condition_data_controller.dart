@@ -25,11 +25,19 @@ class ConditionDataController extends GetxController {
 
   void fetchConditionData() async {
     var response = await service.getAllConditionData(constant.phrConditionGet, constant.phrId);
-    print(response.body);
-    print(response.statusCode);
      if(response.statusCode == 200) {
       var conditionData = conditionModelFromJson(response.body);
-      print(conditionData);
+      condition.value = conditionData;
+    }
+    else{
+      print(response.statusCode);
+    }
+  }
+
+  Future getHospitalConditionData(phrIds) async {
+    var response = await service.getAllConditionData(constant.hospitalConditionGet, phrIds);
+     if(response.statusCode == 200) {
+      var conditionData = conditionModelFromJson(response.body);
       condition.value = conditionData;
     }
     else{

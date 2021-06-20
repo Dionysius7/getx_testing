@@ -23,7 +23,6 @@ class Service {
   }
   Future getAllConditionData(url,phrId){
     var finalUrl = Uri.parse(url + phrId);
-    print(finalUrl);
     return http.get(finalUrl);
   }
   Future postConditionData(url, body, phrId) {

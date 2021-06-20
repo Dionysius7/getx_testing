@@ -19,8 +19,11 @@ class Const{
 
    final String phrConditionGet = "https://us-central1-phr-api.cloudfunctions.net/condition/";
    final String hospitalConditionPost = "https://us-central1-his-api-93700.cloudfunctions.net/condition/";
+   final String hospitalConditionGet = "https://us-central1-his-api-93700.cloudfunctions.net/condition/";
 
    final String phrNotifGet = "https://us-central1-phr-api.cloudfunctions.net/notification/";
    final String hospitalNotifPostPatient = "https://us-central1-his-api-93700.cloudfunctions.net/notification/patient/";
    final String hospitalNotifPostCondition = "https://us-central1-his-api-93700.cloudfunctions.net/notification/condition/";
+
+   
 }
