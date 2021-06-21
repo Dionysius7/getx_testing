@@ -25,7 +25,6 @@ class SeeNotificationPHRPage extends StatelessWidget {
                           color: cardColor,
                           margin: const EdgeInsets.all(12),
                           child: SizedBox(
-                            height:MediaQuery.of(context).size.height/4.5,
                             child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
