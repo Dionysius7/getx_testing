@@ -45,4 +45,16 @@ class NotifDataController extends GetxController {
       return result['message'];
     }
   }
+
+  Future updateNotifStatus(status,id) async {
+    var response = await service.updatePHRNotifStatus(constant.phrNotifUpdate,status,id);
+    var result = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return result['data']['message'];
+    } 
+    else {
+      return result['message'];
+    }
+  }
 }

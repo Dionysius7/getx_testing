@@ -29,4 +29,9 @@ class Service {
     var finalUrl = Uri.parse(url + phrId);
     return http.post(finalUrl, headers: contentType, body: body);
   }
+  Future updatePHRNotifStatus(url, status, notifId){
+    var finalUrl = Uri.parse(url + status + '/' + notifId);
+    print(finalUrl);
+    return http.put(finalUrl, headers:contentType);
+  }
 }

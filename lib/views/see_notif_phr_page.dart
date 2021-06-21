@@ -67,6 +67,21 @@ class SeeNotificationPHRPage extends StatelessWidget {
                                               '${controller.notification[index].type}',
                                               style: TextStyle(fontSize: 14),
                                             ),
+                                            ElevatedButton(
+                                              child: Text("Confirm"),
+                                              onPressed: () async {
+                                                  var result = await notifDataController.updateNotifStatus("confirm", controller.notification[index].notificationId);
+                                                  print(result);
+                                              } 
+                                            ),
+                                            ElevatedButton(
+                                              child: Text("Reject"),
+                                              onPressed: () async {
+                                                  var result = await notifDataController.updateNotifStatus("reject", controller.notification[index].notificationId);
+                                                  print(result);
+                                              } 
+                                            ),
+                                          
                                           ],
                                         ),
                                       ],
