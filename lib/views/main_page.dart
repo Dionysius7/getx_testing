@@ -7,12 +7,16 @@ import 'package:getx_testing/views/register_page.dart';
 import 'package:getx_testing/views/see_condition_page.dart';
 import 'package:getx_testing/views/see_notif_phr_page.dart';
 import 'package:getx_testing/views/see_patient_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainPage extends StatelessWidget {
+
+  final String uid = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("This is Menu Area")),
+      appBar: AppBar(title: Text("Hi, $uid")),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

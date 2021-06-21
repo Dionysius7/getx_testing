@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:getx_testing/views/login_page.dart';
 import 'package:getx_testing/views/main_page.dart';
-import 'package:getx_testing/views/shopping_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
+      home: LoginPage(),
     );
   }
 }
