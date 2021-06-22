@@ -88,7 +88,7 @@ class _OtpPageState extends State<OtpPage> {
               .signInWithCredential(credential)
               .then((value) async {
             if (value.user != null) {
-              Get.to(MainPage());
+              Get.off(MainPage());
             }
           });
         },
