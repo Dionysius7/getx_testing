@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: "Phone Number",
                       prefix: Padding(
                         padding: EdgeInsets.all(4),
-                        child: Text("+62"),
+                        child: Icon(Icons.phone)
                       )),
                   maxLength: 12,
                   keyboardType: TextInputType.number,
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                 color: Colors.blue,
                 child: Text("Next", style: TextStyle(color: Colors.white),),
                 onPressed: (){
-                  Get.to(OtpPage(_controller.text));
+                  Get.off(OtpPage(_controller.text));
                 },
               ),
             )

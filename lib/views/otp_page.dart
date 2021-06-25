@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getx_testing/views/main_page.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
 class OtpPage extends StatefulWidget {
@@ -13,6 +14,7 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
+  final sessionData = GetStorage();
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String? _verificationCode;
   final _pinPutController = TextEditingController();
@@ -36,7 +38,7 @@ class _OtpPageState extends State<OtpPage> {
             Container(
               margin: EdgeInsets.only(top: 40),
               child: Center(
-                child: Text("Verifying +62 ${widget.phone}",
+                child: Text("Verifying ${widget.phone}",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 26)),
               ),
@@ -65,8 +67,12 @@ class _OtpPageState extends State<OtpPage> {
                         )
                       )
                       .then((value) async {
+                          sessionData.write("patientName","Dionysius Sentausa");
+                          sessionData.write("isLogged",true);
+                          print(sessionData.read("patientName"));
+                          print(sessionData.read("isLogged"));
                           if(value.user != null ){
-                              Get.to(MainPage());
+                              Get.offAll(MainPage());
                           }
                       });
                   }catch (e) {
@@ -81,14 +87,19 @@ class _OtpPageState extends State<OtpPage> {
   }
 
   _verifyPhone() async {
+    
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+62${widget.phone}',
         verificationCompleted: (PhoneAuthCredential credential) async {
+          sessionData.write("patientName","Dionysius Sentausa");
+          sessionData.write("isLogged",true);
+          print(sessionData.read("patientName"));
+          print(sessionData.read("isLogged"));
           await FirebaseAuth.instance
               .signInWithCredential(credential)
               .then((value) async {
             if (value.user != null) {
-              Get.off(MainPage());
+              Get.offAll(MainPage());
             }
           });
         },
@@ -105,7 +116,7 @@ class _OtpPageState extends State<OtpPage> {
             _verificationCode = verificationID;
           });
         },
-        timeout: Duration(seconds: 60));
+        timeout: Duration(seconds: 120));
   }
   @override
   void initState() {
