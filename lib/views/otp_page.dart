@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getx_testing/controllers/patient_data_controller.dart';
 import 'package:getx_testing/views/main_page.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +15,7 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
+  final patientDataController = Get.put(PatientDataController());
   final sessionData = GetStorage();
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String? _verificationCode;
@@ -67,6 +69,8 @@ class _OtpPageState extends State<OtpPage> {
                         )
                       )
                       .then((value) async {
+                        var data = patientDataController.fetchPatientByPhone(widget.phone);
+                        print(data);
                           sessionData.write("patientName","Dionysius Sentausa");
                           sessionData.write("isLogged",true);
                           print(sessionData.read("patientName"));
@@ -87,10 +91,11 @@ class _OtpPageState extends State<OtpPage> {
   }
 
   _verifyPhone() async {
-    
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+62${widget.phone}',
         verificationCompleted: (PhoneAuthCredential credential) async {
+          var data = patientDataController.fetchPatientByPhone(widget.phone.toString());
+          print(data);
           sessionData.write("patientName","Dionysius Sentausa");
           sessionData.write("isLogged",true);
           print(sessionData.read("patientName"));

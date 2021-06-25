@@ -34,4 +34,17 @@ class PatientDataController extends GetxController {
       print(response.statusCode);
     }
   }
+  
+  Future fetchPatientByPhone(phone) async {
+    var response = await service.getPatientDataByPhone(constant.phrLoginPatient,phone);
+     if(response.statusCode == 200) {
+      var patientData = userModelFromJson(response.body);
+      print(patientData);
+      print(response.body);
+      patient.value = patientData;
+    }
+    else{
+      print(response.statusCode);
+    }
+  }
 }
