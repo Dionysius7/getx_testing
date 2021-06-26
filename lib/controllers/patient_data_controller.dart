@@ -1,14 +1,18 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_testing/const.dart';
 import 'package:getx_testing/models/user.dart';
 import 'package:getx_testing/service.dart';
+import 'package:get_storage/get_storage.dart';
 
 class PatientDataController extends GetxController {
   var service = new Service();
   var constant = new Const();
-  var patient = <UserModel>[].obs;
+  GetStorage sessionData = GetStorage();
+  List<UserModel> patient = <UserModel>[].obs;
+  RxBool isLoading = false.obs;
 
   Future<String> postPatientData(data) async {
     var url = Uri.parse(constant.phrPatientPost);
@@ -24,27 +28,41 @@ class PatientDataController extends GetxController {
     
   }
   void fetchPatientData() async {
-    var response = await service.getPatientData(constant.phrPatientGet,constant.phrId);
+    isLoading.value = true;
+    try {
+      var response = await service.getPatientData(constant.phrPatientGet,sessionData.read("patientId"));
      if(response.statusCode == 200) {
       var patientData = userModelFromJson(response.body);
+      print(response.body);
       print(patientData);
-      patient.value = patientData;
+      patient = patientData;
+    isLoading.value = false;
+
     }
     else{
       print(response.statusCode);
+    isLoading.value = false;
+
     }
+      
+    } catch (e) {
+    isLoading.value = false;
+      print("error nih fetch data -> $e");
+
+    }
+    
   }
   
-  Future fetchPatientByPhone(phone) async {
-    var response = await service.getPatientDataByPhone(constant.phrLoginPatient,phone);
+  Future<List<UserModel>> fetchPatientByPhone(phone) async {
+    final response = await service.getPatientDataByPhone(constant.phrLoginPatient,phone);
      if(response.statusCode == 200) {
-      var patientData = userModelFromJson(response.body);
-      print(patientData);
-      print(response.body);
-      patient.value = patientData;
+      List<UserModel> patientData = userModelFromJson(response.body);
+      return patient = patientData;
     }
     else{
-      print(response.statusCode);
+      print(response.body);
+
+      return [];
     }
   }
 }

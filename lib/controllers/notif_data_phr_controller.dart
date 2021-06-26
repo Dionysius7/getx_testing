@@ -4,14 +4,17 @@ import 'package:get/get.dart';
 import 'package:getx_testing/const.dart';
 import 'package:getx_testing/models/notification.dart';
 import 'package:getx_testing/service.dart';
+import 'package:get_storage/get_storage.dart';
+
 
 class NotifDataController extends GetxController {
   var notification = <NotifModel>[].obs;
   var service = new Service();
   var constant = new Const();
+  GetStorage sessionData = GetStorage();
 
   void fetchNotifData() async {
-    var response = await service.getAllNotifData(constant.phrNotifGet, constant.phrId);
+    var response = await service.getAllNotifData(constant.phrNotifGet, sessionData.read("patientId"));
      if(response.statusCode == 200) {
       var notifData = notifModelFromJson(response.body);
       print(notifData);

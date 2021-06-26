@@ -14,10 +14,13 @@ class SeePatientPage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child:GetX<PatientDataController>(builder: (controller) {
-                return ListView.builder(
-                  itemCount: controller.patient.length,
+              // child:GetX<PatientDataController>(builder: (controller) {
+              //   return 
+              // }),
+             child: Obx( ()=> patientDataController.isLoading.value? Center(child: CircularProgressIndicator(),) : ListView.builder(
+                  itemCount: patientDataController.patient.length,
                   itemBuilder: (context, index) {
+                    // print("CHECK NAME ${patientDataController.patient[index].name!.text}");
                     return Card(
                           elevation: 20,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -38,35 +41,35 @@ class SeePatientPage extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '${controller.patient[index].name!.text}',
+                                              '${patientDataController.patient[index].name!.text}',
                                               style: TextStyle(fontSize: 24),
                                             ),
                                             Text(
-                                              '${controller.patient[index].phrId}',
+                                              '${patientDataController.patient[index].phrId}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].gender!.display}',
+                                              '${patientDataController.patient[index].gender!.display}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].telecom!.value}',
+                                              '${patientDataController.patient[index].telecom!.value}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].birthdate}',
+                                              '${patientDataController.patient[index].birthdate}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].address!.text}',
+                                              '${patientDataController.patient[index].address!.text}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].extension!.bpjs!.valueString}',
+                                              '${patientDataController.patient[index].extension!.bpjs!.valueString}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                             Text(
-                                              '${controller.patient[index].extension!.nik!.valueString}',
+                                              '${patientDataController.patient[index].extension!.nik!.valueString}',
                                               style: TextStyle(fontSize: 14),
                                             ),
                                           ],
@@ -77,8 +80,7 @@ class SeePatientPage extends StatelessWidget {
                                 )),
                           ));
                     }
-                  );
-              }),
+                  )),
             ),
           ],
         ),

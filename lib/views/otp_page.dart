@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getx_testing/controllers/patient_data_controller.dart';
+import 'package:getx_testing/models/user.dart';
 import 'package:getx_testing/views/main_page.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,26 +63,44 @@ class _OtpPageState extends State<OtpPage> {
                 onSubmit: (pin) async {
                   try {
                     await FirebaseAuth.instance
-                      .signInWithCredential(
-                        PhoneAuthProvider.credential(
-                          verificationId: _verificationCode!,
-                          smsCode: pin
-                        )
-                      )
-                      .then((value) async {
-                        var data = patientDataController.fetchPatientByPhone(widget.phone);
-                        print(data);
-                          sessionData.write("patientName","Dionysius Sentausa");
-                          sessionData.write("isLogged",true);
-                          print(sessionData.read("patientName"));
-                          print(sessionData.read("isLogged"));
-                          if(value.user != null ){
-                              Get.offAll(MainPage());
-                          }
-                      });
-                  }catch (e) {
+                        .signInWithCredential(PhoneAuthProvider.credential(
+                            verificationId: _verificationCode!, smsCode: pin))
+                        .then((value) async {
+                      List<UserModel> data = await patientDataController.fetchPatientByPhone(widget.phone);
+                      // print("Hasil Data ->" + data[0].toString());
+                      // final patientId = data[0].phrId;
+                      // final patientName = data[0].name!.text;
+                      // sessionData.write("patientName",patientName);
+                      // sessionData.write("patientId",patientId);
+                      // sessionData.write("isLogged",true);
+                      //   print(sessionData.read("patientName"));
+                      //   print(sessionData.read("isLogged"));
+                      //   if(value.user != null ){
+                      //       Get.offAll(MainPage());
+                      //   }
+                      if (data.isEmpty) {
+                        // TODO:
+                        FocusScope.of(context).unfocus();
+                        _scaffoldkey.currentState!.showSnackBar(
+                            SnackBar(content: Text("User belum terdaftar")));
+                      } else {
+                        print("Hasil Data ->" + data[0].toString());
+                        final patientId = data[0].phrId;
+                        final patientName = data[0].name!.text;
+                        sessionData.write("patientName", patientName);
+                        sessionData.write("patientId", patientId);
+                        sessionData.write("isLogged", true);
+                        print(sessionData.read("patientName"));
+                        print(sessionData.read("isLogged"));
+                        if (value.user != null) {
+                          Get.offAll(MainPage());
+                        }
+                      }
+                    });
+                  } catch (e) {
                     FocusScope.of(context).unfocus();
-                    _scaffoldkey.currentState!.showSnackBar(SnackBar(content: Text("invalid OTP")));
+                    _scaffoldkey.currentState!
+                        .showSnackBar(SnackBar(content: Text("invalid OTP")));
                   }
                 },
               ),
@@ -94,19 +113,29 @@ class _OtpPageState extends State<OtpPage> {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: '+62${widget.phone}',
         verificationCompleted: (PhoneAuthCredential credential) async {
-          var data = patientDataController.fetchPatientByPhone(widget.phone.toString());
-          print(data);
-          sessionData.write("patientName","Dionysius Sentausa");
-          sessionData.write("isLogged",true);
-          print(sessionData.read("patientName"));
-          print(sessionData.read("isLogged"));
-          await FirebaseAuth.instance
-              .signInWithCredential(credential)
-              .then((value) async {
-            if (value.user != null) {
-              Get.offAll(MainPage());
-            }
-          });
+          List<UserModel> data =
+              await patientDataController.fetchPatientByPhone(widget.phone);
+          print("Hasil Data langsung->" + data[0].toString());
+
+          if (data.isEmpty) {
+            // TODO:
+            FocusScope.of(context).unfocus();
+            _scaffoldkey.currentState!
+                .showSnackBar(SnackBar(content: Text("User belum terdaftar")));
+          } else {
+            final patientId = data[0].phrId;
+            final patientName = data[0].name!.text;
+            sessionData.write("patientName", patientName);
+            sessionData.write("patientId", patientId);
+            sessionData.write("isLogged", true);
+            await FirebaseAuth.instance
+                .signInWithCredential(credential)
+                .then((value) async {
+              if (value.user != null) {
+                Get.offAll(MainPage());
+              }
+            });
+          }
         },
         verificationFailed: (FirebaseAuthException e) {
           print(e.message);
@@ -123,6 +152,7 @@ class _OtpPageState extends State<OtpPage> {
         },
         timeout: Duration(seconds: 120));
   }
+
   @override
   void initState() {
     // TODO: implement initState

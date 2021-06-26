@@ -1,6 +1,4 @@
 class Const{
-   //Static PHR_ID [Delete Later]
-   final String phrId = "EJDDU9XIJAv6acaqRlDE";
    //Static Hospital Name
    final String hospitalNameExample = "Rumah Sakit Bethsaida";
 

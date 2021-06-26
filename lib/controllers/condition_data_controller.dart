@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:getx_testing/const.dart';
 import 'package:getx_testing/models/condition.dart';
 import 'package:getx_testing/service.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ConditionDataController extends GetxController {
   var condition = <ConditionModel>[].obs;
   var service = new Service();
   var constant = new Const();
+  GetStorage sessionData = GetStorage();
 
   Future<String> postConditionData(data, phrIds) async {
     var cModel = data;
@@ -24,7 +26,7 @@ class ConditionDataController extends GetxController {
   }
 
   void fetchConditionData() async {
-    var response = await service.getAllConditionData(constant.phrConditionGet, constant.phrId);
+    var response = await service.getAllConditionData(constant.phrConditionGet, sessionData.read("patientId"));
      if(response.statusCode == 200) {
       var conditionData = conditionModelFromJson(response.body);
       condition.value = conditionData;

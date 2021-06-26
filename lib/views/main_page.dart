@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_testing/const.dart';
 import 'package:getx_testing/views/create_condition.dart';
 import 'package:getx_testing/views/hospital_see_condition_page.dart';
 import 'package:getx_testing/views/login_page.dart';
@@ -15,6 +16,7 @@ class MainPage extends StatelessWidget {
 
   final String uid = FirebaseAuth.instance.currentUser!.uid;
   final sessionData = GetStorage();
+  final constant = new Const();
 
   @override
   Widget build(BuildContext context) {
@@ -143,9 +145,7 @@ class MainPage extends StatelessWidget {
                     margin: EdgeInsets.all(20),
                     child: ElevatedButton(
                         onPressed: () {
-                          sessionData.remove("isLogged");
-                          sessionData.remove("patientName");
-                          Get.offAll(LoginPage());
+                          _logoutUser();
                         },
                         style: ElevatedButton.styleFrom(
                           elevation: 10,
@@ -161,5 +161,11 @@ class MainPage extends StatelessWidget {
           ),
       ),
     );
+  }
+  _logoutUser() async {
+      sessionData.remove("isLogged");
+      sessionData.remove("patientName");
+      sessionData.remove("patientId");
+      Get.offAll(LoginPage());
   }
 }
