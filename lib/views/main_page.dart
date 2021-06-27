@@ -5,6 +5,7 @@ import 'package:getx_testing/views/create_condition.dart';
 import 'package:getx_testing/views/hospital_see_condition_page.dart';
 import 'package:getx_testing/views/login_page.dart';
 import 'package:getx_testing/views/notification_menu_page.dart';
+import 'package:getx_testing/views/qr_menu_page.dart';
 import 'package:getx_testing/views/register_page.dart';
 import 'package:getx_testing/views/see_condition_page.dart';
 import 'package:getx_testing/views/see_notif_phr_page.dart';
@@ -20,7 +21,6 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(FirebaseAuth.instance.currentUser);
     return Scaffold(
       appBar: AppBar(title: Text("Hi, ${sessionData.read("patientName")}"), titleTextStyle: TextStyle(fontSize: 6),),
       body: SingleChildScrollView(
@@ -140,6 +140,20 @@ class MainPage extends StatelessWidget {
                           padding: EdgeInsets.all(15),
                         ),
                         child: Text("Hospital Read Condition")),
+                  ),
+                   Container(
+                    margin: EdgeInsets.all(20),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Get.to(QRMenuPage());
+                        },
+                        style: ElevatedButton.styleFrom(
+                          elevation: 10,
+                          textStyle: TextStyle(fontSize: 25),
+                          primary: Colors.redAccent,
+                          padding: EdgeInsets.all(15),
+                        ),
+                        child: Text("QR Menu")),
                   ),
                    Container(
                     margin: EdgeInsets.all(20),

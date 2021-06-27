@@ -84,14 +84,11 @@ class _OtpPageState extends State<OtpPage> {
                         _scaffoldkey.currentState!.showSnackBar(
                             SnackBar(content: Text("User belum terdaftar")));
                       } else {
-                        print("Hasil Data ->" + data[0].toString());
                         final patientId = data[0].phrId;
                         final patientName = data[0].name!.text;
                         sessionData.write("patientName", patientName);
                         sessionData.write("patientId", patientId);
                         sessionData.write("isLogged", true);
-                        print(sessionData.read("patientName"));
-                        print(sessionData.read("isLogged"));
                         if (value.user != null) {
                           Get.offAll(MainPage());
                         }
@@ -115,8 +112,6 @@ class _OtpPageState extends State<OtpPage> {
         verificationCompleted: (PhoneAuthCredential credential) async {
           List<UserModel> data =
               await patientDataController.fetchPatientByPhone(widget.phone);
-          print("Hasil Data langsung->" + data[0].toString());
-
           if (data.isEmpty) {
             // TODO:
             FocusScope.of(context).unfocus();
