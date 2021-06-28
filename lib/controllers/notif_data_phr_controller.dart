@@ -57,7 +57,7 @@ class NotifDataController extends GetxController {
     print(result);
 
     if (response.statusCode == 200) {
-      return result['data']['message'];
+      return result['data'];
     } 
     else {
       return result['message'];

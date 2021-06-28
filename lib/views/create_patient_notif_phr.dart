@@ -56,12 +56,12 @@ class _MyCustomFormState extends State<MyCustomForm> {
               },
             ),
             ElevatedButton(
-              onPressed: () {
-                qrController.scanImage();
+              onPressed: () async {
+                await qrController.scanImage();
+                phrIdController.text = qrController.resultDataId.value;
               }, 
               child: Text("Scan")
             ),
-            Text(qrController.resultDataId.value.toString()),
             Container(
               padding: const EdgeInsets.only(left: 150.0, top: 20.0),
               child: ElevatedButton(
