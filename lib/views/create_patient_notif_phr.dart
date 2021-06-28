@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:getx_testing/const.dart';
 import 'package:getx_testing/controllers/notif_data_phr_controller.dart';
+import 'package:getx_testing/controllers/qr_menu_controller.dart';
 import 'package:getx_testing/service.dart';
 
 class CreatePatientNotificationPHR extends StatelessWidget {
@@ -22,6 +23,7 @@ class MyCustomForm extends StatefulWidget {
 
 class _MyCustomFormState extends State<MyCustomForm> {
   final notifDataController = Get.put(NotifDataController());
+  final qrController = Get.put(QRMenuController());
   final _formKey = GlobalKey<FormState>();
 
   // Create Controller to get Data from FORM
@@ -34,7 +36,9 @@ class _MyCustomFormState extends State<MyCustomForm> {
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
-        child: Column(
+        child: 
+        Obx( () => qrController.isLoading.value == true ? CircularProgressIndicator() :
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
@@ -51,6 +55,13 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 return null;
               },
             ),
+            ElevatedButton(
+              onPressed: () {
+                qrController.scanImage();
+              }, 
+              child: Text("Scan")
+            ),
+            Text(qrController.resultDataId.value.toString()),
             Container(
               padding: const EdgeInsets.only(left: 150.0, top: 20.0),
               child: ElevatedButton(
@@ -64,6 +75,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
               ),
             ),
           ],
-        ));
+        ))
+    );
   }
 }

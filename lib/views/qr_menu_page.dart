@@ -33,14 +33,13 @@ class QRMenuPage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(4),
                         child: QrImage(
-                          // sessionData.read("patientId")
-                          data: "Link : https://drive.google.com/drive/u/0/folders/1Yy46LrCrxRZkIKGVJHpZM7j-NzfjIv3y",
+                          data: sessionData.read("patientId"),
                           version: QrVersions.auto,
-                          size: MediaQuery.of(context).size.width/1.5,
+                          size: MediaQuery.of(context).size.width/2,
                           gapless: false,
                           errorCorrectionLevel: QrErrorCorrectLevel.H,
                           embeddedImage: NetworkImage(qrController.imgUrl.value),
-                          embeddedImageStyle: QrEmbeddedImageStyle(size: Size(80,80)),
+                          embeddedImageStyle: QrEmbeddedImageStyle(size: Size(60,60)),
                         ),
                       )
                     ]),

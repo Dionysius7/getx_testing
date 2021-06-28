@@ -18,6 +18,7 @@ class QRMenuController extends GetxController {
   }
 
   scanImage() async {
+    isLoading.value = true;
     var options = ScanOptions(
       autoEnableFlash: false,
       android: AndroidOptions(
@@ -27,9 +28,6 @@ class QRMenuController extends GetxController {
     );
     ScanResult result = await BarcodeScanner.scan(options: options);
     resultDataId = result.rawContent.toString().obs;
-    // print(result.type);
-    // print(result.format);
-    // print(result.rawContent);
-    // print(result.formatNote);
+    isLoading.value = false;
   }
 }
